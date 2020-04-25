@@ -1,0 +1,22 @@
+{
+  "name": "remember-name",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielgl9/remember-name.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielgl9/remember-name/issues"
+  },
+  "homepage": "https://github.com/gabrielgl9/remember-name#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
