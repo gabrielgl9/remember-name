@@ -8,13 +8,11 @@ var usersRouter = require('./routes/users');
 var charactersRouter = require('./routes/characters');
 
 var app = express();
-app.get('/teste', function(req, res) {
-    console.log('oi');
-    res.send('Bah!');
-});
+
 app.listen(3000, function() {
     console.log('escutando');
 })
+
 app.use(logger('dev'));
 app.use(express.json()); // Permite receber/retornar requisições com JSON
 app.use(express.urlencoded({ extended: false })); // Permite receber requisições pela URL

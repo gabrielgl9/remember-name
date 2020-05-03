@@ -4,8 +4,7 @@ module.exports = {
         "password": "startaideia",
         "database": "remember-names",
         "host": "127.0.0.1",
-        "dialect": "mysql",
-        "operatorsAliases": false
+        "dialect": "mysql"
     },
     "test": {
         "username": "root",
