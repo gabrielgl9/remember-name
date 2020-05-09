@@ -1,7 +1,32 @@
 const { user } = require('../app/models');
+const authService = require('../services/auth-service');
 
 exports.login = async(req, res, next) => {
+    const userModel = await user.findOne({
+        where: {
+            email: req.body.email,
+            password: req.body.password
+        }
+    });
 
+    if (!userModel) {
+        res.status(404).send({
+            message: 'Usuário ou senha inválidos'
+        });
+    }
+
+    const token = await authService.generateToken({
+        name: userModel.name,
+        email: userModel.email
+    });
+
+    return res.status(201).send({
+        token,
+        data: {
+            name: userModel.name,
+            email: userModel.email
+        }
+    })
 }
 
 exports.getAll = async(req, res, next) => {
