@@ -23,9 +23,14 @@ exports.getAll = async(req, res, next) => {
     }
 };
 
-exports.create = (req, res, next) => {
+exports.create = async(req, res, next) => {
     try {
-        const characterModel = await character.create(req.body);
+        const token = req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
+        const characterModel = await character.create({
+            ...req.body,
+            user_id: data.id
+        });
         res.json(201).json({
             error: false,
             data: characterModel
@@ -39,11 +44,14 @@ exports.create = (req, res, next) => {
     }
 };
 
-exports.delete = (req, res, next) => {
+exports.delete = async(req, res, next) => {
     try {
+        const token = req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
         await character.destroy({
             where: {
-                id: req.params.id
+                id: req.params.id,
+                user_id: data.id
             }
         });
         return res.status(204).json({
@@ -59,11 +67,14 @@ exports.delete = (req, res, next) => {
     }
 };
 
-exports.update = (req, res, next) => {
+exports.update = async(req, res, next) => {
     try {
+        const token = req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
         const characterModel = await character.update(req.body, {
             where: {
-                id: req.params.id
+                id: req.params.id,
+                user_id: data.id
             }
         });
         return res.status(200).json({

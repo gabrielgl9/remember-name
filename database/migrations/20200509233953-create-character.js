@@ -15,14 +15,14 @@ module.exports = {
             },
             description: {
                 type: Sequelize.TEXT,
-                allowNull: false
+                allowNull: true
             },
             photo: {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
             status: {
-                type: Sequelize.BOOLEAN,
+                type: Sequelize.STRING.BINARY,
                 allowNull: false
             },
             user_id: {
