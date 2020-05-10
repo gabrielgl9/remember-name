@@ -2,31 +2,40 @@ const { user } = require('../app/models');
 const authService = require('../services/auth-service');
 
 exports.login = async(req, res, next) => {
-    const userModel = await user.findOne({
-        where: {
-            email: req.body.email,
-            password: req.body.password
-        }
-    });
-
-    if (!userModel) {
-        res.status(404).send({
-            message: 'Usuário ou senha inválidos'
+    try {
+        const userModel = await user.findOne({
+            where: {
+                email: req.body.email,
+                password: req.body.password
+            }
         });
-    }
 
-    const token = await authService.generateToken({
-        name: userModel.name,
-        email: userModel.email
-    });
+        if (!userModel) {
+            res.status(404).send({
+                message: 'Usuário ou senha inválidos'
+            });
+        }
 
-    return res.status(201).send({
-        token,
-        data: {
+        const token = await authService.generateToken({
+            id: userModel.id,
             name: userModel.name,
             email: userModel.email
-        }
-    })
+        });
+
+        return res.status(201).send({
+            token,
+            data: {
+                name: userModel.name,
+                email: userModel.email
+            }
+        });
+    } catch (e) {
+        res.status(400).json({
+            error: true,
+            data: [],
+            error: e
+        });
+    }
 }
 
 exports.getAll = async(req, res, next) => {
