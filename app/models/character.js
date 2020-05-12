@@ -7,5 +7,12 @@ module.exports = (sequelize, dataTypes) => {
         folder_id: dataTypes.INTEGER
     });
 
+    character.associate = (models) => {
+        character.belongsTo(models.folder, {
+            foreignKey: 'folder_id',
+            as: 'folder'
+        })
+    };
+
     return character;
 }

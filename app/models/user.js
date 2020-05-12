@@ -4,6 +4,9 @@ module.exports = (sequelize, dataTypes) => {
         email: dataTypes.STRING,
         password: dataTypes.STRING
     });
+    user.associate = (models) => {
+        user.hasMany(models.folder, { as: 'folders' })
+    };
 
     return user;
 }

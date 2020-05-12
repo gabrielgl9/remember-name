@@ -6,6 +6,15 @@ module.exports = (sequelize, dataTypes) => {
         status: dataTypes.STRING.BINARY,
         user_id: dataTypes.INTEGER
     });
+    folder.associate = (models) => {
+        folder.hasMany(models.character, { as: 'characters' })
+    };
+    folder.associate = (models) => {
+        folder.belongsTo(models.user, {
+            foreignKey: 'user_id',
+            as: 'user'
+        })
+    };
 
     return folder;
 }
