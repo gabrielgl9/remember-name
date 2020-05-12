@@ -6,6 +6,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var charactersRouter = require('./routes/characters');
+var foldersRouter = require('./routes/folders');
 var auth = require('./services/auth-service');
 
 var app = express();
@@ -23,5 +24,6 @@ app.use(express.static(path.join(__dirname, 'public'))); // Torna um diretório 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/characters', auth.authorization, charactersRouter);
+app.use('/folders', auth.authorization, foldersRouter);
 
 module.exports = app;

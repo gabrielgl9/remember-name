@@ -2,7 +2,7 @@
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('characters', {
+        return queryInterface.createTable('folders', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -25,10 +25,10 @@ module.exports = {
                 type: Sequelize.STRING.BINARY,
                 allowNull: false
             },
-            folder_id: {
+            user_id: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'folders',
+                    model: 'users',
                     key: 'id'
                 },
                 allowNull: false
@@ -45,6 +45,6 @@ module.exports = {
     },
 
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('characters');
+        return queryInterface.dropTable('folders');
     }
 };

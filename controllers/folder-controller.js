@@ -1,15 +1,18 @@
-const { character } = require('../app/models');
+const { folder } = require('../app/models');
+const authService = require('../services/auth-service');
 
-exports.getAllByFolder = async(req, res, next) => {
+exports.getAll = async(req, res, next) => {
     try {
-        const characterModel = await character.findAll({
+        const token = req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
+        const folderModel = await folder.findAll({
             where: {
-                folder_id: req.params.idFolder
+                user_id: data.id
             }
         });
         res.status(200).send({
             error: false,
-            data: characterModel
+            data: folderModel
         });
     } catch (e) {
         res.status(401).send({
@@ -22,10 +25,15 @@ exports.getAllByFolder = async(req, res, next) => {
 
 exports.create = async(req, res, next) => {
     try {
-        const characterModel = await character.create(req.body);
+        const token = req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
+        const folderModel = await folder.create({
+            ...req.body,
+            user_id: data.id
+        });
         res.json(201).json({
             error: false,
-            data: characterModel
+            data: folderModel
         });
     } catch (e) {
         res.status(401).send({
@@ -38,9 +46,12 @@ exports.create = async(req, res, next) => {
 
 exports.delete = async(req, res, next) => {
     try {
-        await character.destroy({
+        const token = req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
+        await folder.destroy({
             where: {
                 id: req.params.id,
+                user_id: data.id
             }
         });
         return res.status(204).json({
@@ -58,14 +69,17 @@ exports.delete = async(req, res, next) => {
 
 exports.update = async(req, res, next) => {
     try {
-        const characterModel = await character.update(req.body, {
+        const token = req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
+        const folderModel = await folder.update(req.body, {
             where: {
-                id: req.params.id
+                id: req.params.id,
+                user_id: data.id
             }
         });
         return res.status(200).json({
             error: false,
-            data: characterModel
+            data: folderModel
         });
     } catch (e) {
         res.status(400).json({

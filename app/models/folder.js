@@ -1,11 +1,11 @@
 module.exports = (sequelize, dataTypes) => {
-    const character = sequelize.define('character', {
+    const folder = sequelize.define('folder', {
         name: dataTypes.STRING,
         description: dataTypes.TEXT,
         photo: dataTypes.STRING,
         status: dataTypes.STRING.BINARY,
-        folder_id: dataTypes.INTEGER
+        user_id: dataTypes.INTEGER
     });
 
-    return character;
+    return folder;
 }
